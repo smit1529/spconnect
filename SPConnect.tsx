@@ -27,7 +27,7 @@ class SPConnect extends Component<{}, ISPConnectState> {
 
   public getSharePointLists() {
     var self = this;
-    var url = "https://binaryrepublik516.sharepoint.com/sites/UMC/_api/web/lists?$filter=Hidden eq false";
+    var url = "https://binaryrepublik516.sharepoint.com/sites/UMC/_api/web/lists?$select=Title&$filter=Hidden eq false";
 
     console.log(url);
 
@@ -35,10 +35,10 @@ class SPConnect extends Component<{}, ISPConnectState> {
       type: "GET",
       headers: { 'Accept': 'application/json; odata=verbose;' },
       success: (resultData) => {
-        console.log(resultData.d.results);
+        console.log("Success", resultData.d.results);
       },
       error: (jqXHR, textStatus, errorThrown) => {
-        console.log(jqXHR, textStatus, errorThrown);
+        console.log("Error", jqXHR, textStatus, errorThrown);
       }
     });
 
