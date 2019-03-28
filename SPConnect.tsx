@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonType, DatePicker, TextField, Dropdown, dropDownOptions } from 'office-ui-fabric-react';
+import * as $ from 'jquery';
 
 export interface ISPConnectState {
   SP_ListArray: SPConnectValues[];
@@ -28,22 +29,35 @@ class SPConnect extends Component<{}, ISPConnectState> {
     var self = this;
     var url = "https://binaryrepublik516.sharepoint.com/sites/UMC/_api/web/lists?$filter=Hidden eq false";
 
-    fetch(url, {
-      credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-    })
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          console.log(result.value);
+    console.log(url);
 
-          var listTitle = result.value.map((items) => { return items.Title; });
-          self.LoadDropDownValues(listTitle);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    $.ajax({
+      type: "GET",
+      headers: { 'Accept': 'application/json; odata=verbose;' },
+      success: (resultData) => {
+        console.log(resultData.d.results);
+      },
+      error: (jqXHR, textStatus, errorThrown) => {
+        console.log(jqXHR, textStatus, errorThrown);
+      }
+    });
+
+    // fetch(url, {
+    //   credentials: 'same-origin',
+    //   headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+    // })
+    //   .then((res) => res.json())
+    //   .then(
+    //     (result) => {
+    //       console.log(result.value);
+
+    //       var listTitle = result.value.map((items) => { return items.Title; });
+    //       self.LoadDropDownValues(listTitle);
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //     }
+    //   );
   }
 
   private LoadDropDownValues(data): any {
