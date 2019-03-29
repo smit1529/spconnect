@@ -33,7 +33,9 @@ class SPConnect extends Component<{}, ISPConnectState> {
 
     $.ajax({
       type: "GET",
-      headers: { 'Accept': 'application/json; odata=verbose;' },
+      headers: {
+         "Authorization": "Bearer " + accessToken,
+       'Accept': 'application/json; odata=verbose;' },
       success: (resultData) => {
         console.log("Success", resultData.d.results);
       },
